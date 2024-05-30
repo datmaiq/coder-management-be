@@ -92,9 +92,15 @@ async function getById(req: Request, res: Response) {
   }
 }
 
+interface ListTasksFilter {
+  isDeleted: boolean
+  userId?: string
+  status?: string
+}
+
 async function list(req: Request, res: Response) {
   try {
-    let filter = {}
+    let filter: ListTasksFilter = {isDeleted: false}
     const userId = req.query.userId as string;
     if (userId) {
       if (!mongoose.isValidObjectId(userId)) {
@@ -102,7 +108,7 @@ async function list(req: Request, res: Response) {
         return;
       }
 
-      filter = {userId}
+      filter = {...filter, userId: userId}
     }
     const status = req.query.status as string;
     if (status) filter = {...filter, status: status}
