@@ -14,7 +14,7 @@ import childProcess from "child_process";
     // Remove current build
     await remove("./dist/");
     // Copy back-end files
-    await exec("tsc --build tsconfig.prod.json", "./");
+    await exec("tsc --build tsconfig.json", "./");
   } catch (err) {
     logger.err(err);
     process.exit(1);
