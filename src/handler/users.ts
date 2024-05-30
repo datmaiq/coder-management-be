@@ -1,8 +1,7 @@
-import {IReq, IRes} from './types/express/misc';
-
 import User from "@src/models/User";
+import {Request, Response} from "express";
 
-async function list(req: IReq<GetUsersRequest>, res: IRes) {
+async function list(req: Request<GetUsersRequest>, res: Response) {
   try {
     let filter = {};
     const name = req.query.name as string;
@@ -15,7 +14,7 @@ async function list(req: IReq<GetUsersRequest>, res: IRes) {
 }
 
 
-async function create(req: IReq<CreateUserRequest>, res: IRes) {
+async function create(req: Request<CreateUserRequest>, res: Response) {
   try {
     const {name} = req.body;
 
