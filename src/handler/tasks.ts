@@ -1,10 +1,10 @@
 import Task from "@src/models/Task";
-import {IReq, IRes} from "@src/handler/types/express/misc";
 import mongoose, {Types} from "mongoose";
+import {Request, Response} from "express";
 import User from "@src/models/User";
 
 
-async function create(req: IReq<CreateTaskRequest>, res: IRes) {
+async function create(req: Request, res: Response) {
   try {
     if (!req.body) {
       res.status(400).json({error: 'task data should not be empty'});
@@ -65,7 +65,7 @@ async function create(req: IReq<CreateTaskRequest>, res: IRes) {
   }
 }
 
-async function getById(req: IReq<{ id: string }>, res: IRes) {
+async function getById(req: Request, res: Response) {
   try {
     const id = req.params.id;
     if (!id) {
@@ -92,7 +92,7 @@ async function getById(req: IReq<{ id: string }>, res: IRes) {
   }
 }
 
-async function list(req: IReq<GetTasksRequest>, res: IRes) {
+async function list(req: Request, res: Response) {
   try {
     let filter = {}
     const userId = req.query.userId as string;
@@ -110,7 +110,7 @@ async function list(req: IReq<GetTasksRequest>, res: IRes) {
     const sortField = req.query.sortField as string;
     const sortOrder = req.query.sortOrder as string;
 
-    let sort: any = { createdAt: -1 };
+    let sort: any = {createdAt: -1};
     if (sortField) {
       const validSortFields = ['createdAt', 'updatedAt'];
       if (validSortFields.includes(sortField)) {
@@ -125,7 +125,7 @@ async function list(req: IReq<GetTasksRequest>, res: IRes) {
   }
 }
 
-async function updateById(req: IReq<UpdateTasksRequest>, res: IRes) {
+async function updateById(req: Request, res: Response) {
   try {
     const taskId = req.params.id;
     const update: UpdateTasksRequest = req.body;
@@ -167,7 +167,7 @@ async function updateById(req: IReq<UpdateTasksRequest>, res: IRes) {
   }
 }
 
-async function softDeleteById(req: IReq<{ id: string }>, res: IRes) {
+async function softDeleteById(req: Request, res: Response) {
   try {
     const taskId = req.params.id;
     if (!mongoose.isValidObjectId(taskId)) {
